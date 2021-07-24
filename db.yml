@@ -1,0 +1,9 @@
+---
+# Deploy_HA_Webapp_on_GCP
+- name: Deploy a mysql DB 
+  hosts: gce_db_instances_ips
+  become: yes
+  become_method: sudo
+  roles:
+    - python
+    - mysql_db

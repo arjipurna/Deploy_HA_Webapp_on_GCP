@@ -1,0 +1,10 @@
+---
+# Deploy_HA_Webapp_on_GCP
+- name: Deploy apache and custom web pages
+  hosts: gce_instances_ips
+  become: yes
+  become_method: sudo
+  roles:
+    - python
+    - flask_web
+    - simple-web

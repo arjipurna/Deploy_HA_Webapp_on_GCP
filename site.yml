@@ -1,0 +1,7 @@
+---
+# Deploy_HA_Webapp_on_GCP
+- include: gce-db-instances.yml
+- include: db.yml
+- include: gce-instances.yml
+- include: web.yml
+- include: gce-lb.yml

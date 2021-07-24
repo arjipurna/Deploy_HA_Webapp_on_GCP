@@ -1,0 +1,30 @@
+
+    - name: Install Python Flask dependencies
+      pip:
+        name: '{{ item }}'
+        state: present
+      with_items:
+       - flask
+       - flask-mysql
+
+    - name: Install GIT dependencies
+      apt: name={{ item }} state=present
+      with_items:
+         - htop
+         - git-all
+
+    - name: GIT clone a repo to get the webapplication under /tmp/webapp directory
+      ansible.builtin.git:
+        repo: https://github.com/arjipurna/mywork.git
+        dest: /tmp/webapp
+
+    - name: Copy web-server code from /tmp/webapp/webapp/app.py to /opt
+      copy: src=/tmp/webapp/webapp/app.py dest=/opt/app.py remote_src=yes directory_mode=yes
+    
+    - name: GIT remove cloned repo dir after the copy to opt directory
+      ansible.builtin.file:
+         path: /tmp/webapp
+         state: absent
+
+    - name: Start web-application
+      shell: FLASK_APP=/opt/app.py nohup flask run --host=0.0.0.0 &
